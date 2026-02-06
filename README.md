@@ -1,16 +1,45 @@
-# React + Vite
+# 🎧 Echo Music Player
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Echo Music Player is a modern dark-themed music player built using **React + JavaScript + plain CSS**.  
+The project focuses on clean UI design, reusable components, and smooth user interaction while keeping the implementation simple and interview-friendly.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+- 🎵 Play / Pause / Next / Previous controls
+- 💿 Rotating CD-style music player
+- 🎶 Lyrics panel with fallback message
+- 🔍 Search songs by title or artist
+- ➕ Add local songs with custom cover
+- 🗑 Delete songs from library
+- 🌙 Dark theme UI with animated background
+- 📱 Responsive layout using Flexbox & Grid
+- 🎨 Default album cover when none is provided
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **React (Vite)**
+- **JavaScript (ES6)**
+- **Plain CSS**
+- Flexbox & CSS Grid
+- HTML5 Audio API
+
+---
+
+## ⚠️ Notes
+
+- Songs added locally are temporary and may be removed after refreshing the application.
+- Playback stops when the player is closed (intentional behavior for this version).
+
+---
+
+## 🚀 Getting Started
+
+## Live Link
+
+https://echo-musicplayer-by-zainab.vercel.app/
+
+## By Zainab Kashif
