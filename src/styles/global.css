@@ -1,0 +1,31 @@
+:root {
+  --bg-main: #0c0f12;
+  --bg-secondary: #151a1f;
+
+  --accent: #00d2d8;
+  --accent-hover: #33e3e8;
+
+  --text-main: #ffffff;
+  --text-muted: #a8b0b8;
+
+  --border-soft: #222a32;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: "Inter", Arial, sans-serif;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+}
