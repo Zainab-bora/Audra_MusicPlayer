@@ -168,7 +168,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .home-profile {
@@ -207,9 +208,12 @@
 }
 
 @media (max-width: 768px) {
-
   .home {
     padding: 20px;
+  }
+
+  .home {
+    padding-top: 100px;
   }
 
   .music-grid {
@@ -217,8 +221,12 @@
     gap: 20px;
   }
 
+  .music-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .music-card {
     width: 100%;
   }
-
 }

@@ -54,11 +54,17 @@
 
 @media (max-width: 768px) {
   .mobile-menu-btn {
-    display: block;
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
 
     position: fixed;
     top: 20px;
     left: 20px;
+
+    width: 55px;
+    height: 55px;
 
     z-index: 2000;
 
@@ -66,14 +72,14 @@
     color: black;
 
     border: none;
-    border-radius: 10px;
+    border-radius: 16px;
 
-    padding: 10px 15px;
-
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
 
     cursor: pointer;
+
+    box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
   }
 
   .sidebar {
@@ -82,7 +88,7 @@
     top: 0;
     left: -100%;
 
-    width: 260px;
+    width: 220px;
     height: 100vh;
 
     z-index: 1500;
