@@ -12,6 +12,13 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+html,
+body,
+#root {
+  width: 100%;
+  overflow-x: hidden;
+  background: #02050a;
+}
 
 a {
   font-weight: 500;

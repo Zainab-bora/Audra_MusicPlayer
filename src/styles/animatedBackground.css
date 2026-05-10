@@ -1,9 +1,12 @@
 .animated-bg {
   position: fixed;
+
   top: 0;
-  left: 240px; /* sidebar width */
-  width: calc(100% - 240px);
+  left: 0;
+
+  width: 100%;
   height: 100vh;
+
   z-index: -1;
 
   background:
@@ -24,6 +27,7 @@
       20% 30%,
       80% 70%;
   }
+
   100% {
     background-position:
       30% 40%,

@@ -63,8 +63,8 @@
     top: 20px;
     left: 20px;
 
-    width: 55px;
-    height: 55px;
+    width: 45px;
+    height: 45px;
 
     z-index: 2000;
 
@@ -74,7 +74,7 @@
     border: none;
     border-radius: 16px;
 
-    font-size: 28px;
+    font-size: 20px;
     font-weight: bold;
 
     cursor: pointer;
@@ -98,6 +98,9 @@
     background: rgba(0, 0, 0, 0.95);
 
     padding: 30px 20px;
+  }
+  .sidebar {
+    flex-shrink: 0;
   }
 
   .sidebar.open {

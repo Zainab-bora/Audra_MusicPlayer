@@ -191,16 +191,24 @@
 
 @media (max-width: 768px) {
   .player {
+    display: flex;
     flex-direction: column;
-    align-items: center;
 
-    padding: 20px;
+    align-items: center;
+    justify-content: flex-start;
+
+    padding: 100px 20px 40px;
 
     gap: 30px;
+
+    overflow-y: auto;
   }
 
-  .song-info {
+  .cd-container {
     width: 100%;
+
+    display: flex;
+    justify-content: center;
   }
 
   .cd {
@@ -208,7 +216,17 @@
     height: 220px;
   }
 
+  .song-info {
+    width: 100%;
+    text-align: center;
+  }
+
   .controls {
     justify-content: center;
+    gap: 20px;
+  }
+
+  .back-btn {
+    display: none;
   }
 }
