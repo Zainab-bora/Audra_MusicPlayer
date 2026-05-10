@@ -36,6 +36,7 @@ export default function App() {
   useEffect(() => {
     if (!user) {
       setSongs([]);
+      setLoading(false);
       return;
     }
 
