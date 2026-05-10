@@ -68,6 +68,22 @@ export default function Player({
     setCurrentSong(songs[prevIndex]);
   };
 
+  useEffect(() => {
+    const handleBackButton = () => {
+      if (window.innerWidth <= 768) {
+        setShowPlayer(false);
+      }
+    };
+
+    window.history.pushState(null, "", window.location.href);
+
+    window.addEventListener("popstate", handleBackButton);
+
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, []);
+
   return (
     <div className="player">
       {/* CD */}
