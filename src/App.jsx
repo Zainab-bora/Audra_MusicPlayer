@@ -91,7 +91,13 @@ export default function App() {
 
       setCurrentSong(songs[nextIndex]);
     };
-  }, [currentSong, songs, volume]);
+  }, [currentSong, songs]);
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+
+    audioRef.current.volume = volume;
+  }, [volume]);
 
   // Play / Pause
   const togglePlay = () => {
