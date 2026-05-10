@@ -157,3 +157,45 @@
 .refresh-note:hover {
   opacity: 1;
 }
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.home-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid cyan;
+}
+
+.home-auth-btn {
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+
+  background: rgba(0, 255, 255, 0.15);
+  color: white;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.home-auth-btn:hover {
+  background: rgba(0, 255, 255, 0.3);
+}
+
+.home-profile span {
+  color: white;
+  font-size: 14px;
+}

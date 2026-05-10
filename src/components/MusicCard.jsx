@@ -16,7 +16,7 @@ export default function MusicCard({ song, onSelect, onDelete }) {
         className="delete-btn"
         onClick={(e) => {
           e.stopPropagation();
-          onDelete(song.id);
+          onDelete(song.firestoreId);
         }}
       >
         🗑

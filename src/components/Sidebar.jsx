@@ -1,14 +1,24 @@
 import "../styles/sidebar.css";
 
-export default function Sidebar({ activeView, setActiveView, setCurrentSong }) {
+import MiniPlayer from "./MiniPlayer";
+
+export default function Sidebar({
+  activeView,
+  setActiveView,
+  currentSong,
+  isPlaying,
+  togglePlay,
+  setShowPlayer,
+  currentTime,
+  duration,
+}) {
   const handleNavClick = (view) => {
     setActiveView(view);
-    setCurrentSong(null);
   };
 
   return (
     <aside className="sidebar">
-      <h1 className="logo">Echo Music</h1>
+      <h1 className="logo">Audra MusicPlayer</h1>
 
       <nav className="sidebar-nav">
         <button
@@ -25,6 +35,15 @@ export default function Sidebar({ activeView, setActiveView, setCurrentSong }) {
           Search
         </button>
       </nav>
+
+      <MiniPlayer
+        currentSong={currentSong}
+        isPlaying={isPlaying}
+        togglePlay={togglePlay}
+        setShowPlayer={setShowPlayer}
+        currentTime={currentTime}
+        duration={duration}
+      />
     </aside>
   );
 }

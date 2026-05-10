@@ -1,0 +1,69 @@
+.mini-player {
+  margin-top: auto;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  box-shadow: 0 0 18px rgba(0, 255, 255, 0.08);
+}
+
+.mini-cover {
+  width: 100%;
+  border-radius: 14px;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.mini-info h4 {
+  color: white;
+  margin: 0;
+  font-size: 15px;
+}
+
+.mini-info p {
+  margin: 4px 0 0;
+  color: #b8b8b8;
+  font-size: 13px;
+}
+
+.mini-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.mini-controls button {
+  flex: 1;
+  border: none;
+  border-radius: 12px;
+  padding: 10px;
+  background: rgba(0, 255, 255, 0.12);
+  color: white;
+  cursor: pointer;
+  transition: 0.2s ease;
+  font-size: 16px;
+}
+
+.mini-controls button:hover {
+  background: rgba(0, 255, 255, 0.25);
+}
+
+.mini-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.mini-progress-fill {
+  height: 100%;
+  background: cyan;
+  border-radius: 10px;
+  transition: width 0.2s linear;
+}

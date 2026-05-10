@@ -1,37 +1,52 @@
 import { useState } from "react";
 import "../styles/addSong.css";
-import { fileToBase64 } from "../utils/fileToBase64";
+import uploadToCloudinary from "../utils/uploadToCloudinary";
+import { addSongToFirestore } from "../services/songService";
 
-export default function AddSongModal({ onClose, onSave }) {
+export default function AddSongModal({ onClose, onSave, user }) {
   const [audio, setAudio] = useState(null);
   const [cover, setCover] = useState(null);
   const [artist, setArtist] = useState("");
-
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = reject;
-    });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (!audio) return;
 
-    const audioBase64 = await toBase64(audio);
-    const coverBase64 = cover ? await toBase64(cover) : null;
+    try {
+      setLoading(true);
 
-    const newSong = {
-      id: Date.now(),
-      title: audio.name.replace(/\.[^/.]+$/, ""),
-      artist: artist || "Unknown Artist",
-      audio: audioBase64,
-      cover: coverBase64,
-      lyrics: "",
-    };
+      // Upload audio file
+      const audioUrl = await uploadToCloudinary(audio);
 
-    onSave(newSong);
-    onClose();
+      // Upload cover image if exists
+      let coverUrl = null;
+
+      if (cover) {
+        coverUrl = await uploadToCloudinary(cover);
+      }
+
+      console.log("Audio URL:", audioUrl);
+      console.log("Cover URL:", coverUrl);
+
+      const newSong = {
+        id: Date.now(),
+        title: audio.name.replace(/\.[^/.]+$/, ""),
+        artist: artist || "Unknown Artist",
+        audio: audioUrl,
+        cover: coverUrl,
+        lyrics: "",
+        userId: user.uid,
+      };
+
+      await addSongToFirestore(newSong);
+
+      onSave(newSong);
+      onClose();
+    } catch (error) {
+      console.error("Error uploading song:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -71,8 +86,9 @@ export default function AddSongModal({ onClose, onSave }) {
           <button className="cancel-btn" onClick={onClose}>
             Cancel
           </button>
-          <button className="add-btn" onClick={handleSubmit}>
-            Add Song
+
+          <button className="add-btn" onClick={handleSubmit} disabled={loading}>
+            {loading ? "Uploading..." : "Add Song"}
           </button>
         </div>
       </div>

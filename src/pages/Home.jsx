@@ -5,7 +5,15 @@ import AddSongModal from "../components/AddSongModal";
 import "../styles/home.css";
 import AnimatedBackground from "../components/AnimatedBackground";
 
-export default function Home({ songs, onSongSelect, onAddSong, onDeleteSong }) {
+export default function Home({
+  songs,
+  onSongSelect,
+  onAddSong,
+  onDeleteSong,
+  user,
+  signInWithGoogle,
+  logoutUser,
+}) {
   const [showModal, setShowModal] = useState(false);
 
   const handleAddSong = (song) => {
@@ -15,7 +23,31 @@ export default function Home({ songs, onSongSelect, onAddSong, onDeleteSong }) {
 
   return (
     <div className="home">
-      <h2 className="home-title">Discover</h2>
+      <div className="home-header">
+        <h2 className="home-title">Discover</h2>
+
+        <div className="home-auth">
+          {user ? (
+            <div className="home-profile">
+              <img
+                src={user.photoURL}
+                alt={user.displayName}
+                className="home-avatar"
+              />
+
+              <span>{user.displayName}</span>
+
+              <button className="home-auth-btn" onClick={logoutUser}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <button className="home-auth-btn" onClick={signInWithGoogle}>
+              Login with Google
+            </button>
+          )}
+        </div>
+      </div>
 
       <div className="music-grid">
         <AddSongCard onAdd={() => setShowModal(true)} />
@@ -34,11 +66,12 @@ export default function Home({ songs, onSongSelect, onAddSong, onDeleteSong }) {
         <AddSongModal
           onClose={() => setShowModal(false)}
           onSave={handleAddSong}
+          user={user}
         />
       )}
 
       <p className="refresh-note">
-        Added songs are stored temporarily and may disappear on refresh.
+        Your songs are safely saved and always ready to play ✨{" "}
       </p>
       <AnimatedBackground />
     </div>

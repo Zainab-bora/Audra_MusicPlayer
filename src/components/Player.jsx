@@ -1,40 +1,50 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+
 import "../styles/player.css";
+
 import AnimatedBackground from "../components/AnimatedBackground";
+
 import defaultCover from "../assets/default-cover.jpeg";
 
-export default function Player({ songs, currentSong, setCurrentSong }) {
+export default function Player({
+  songs,
+  currentSong,
+  setCurrentSong,
+  setShowPlayer,
+  audioRef,
+  isPlaying,
+  setIsPlaying,
+  volume,
+  setVolume,
+}) {
   if (!currentSong) return null;
 
-  const audioRef = useRef(null);
-
-  const [isPlaying, setIsPlaying] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-  const [volume, setVolume] = useState(0.7);
 
   const currentIndex = songs.findIndex((s) => s.id === currentSong.id);
 
+  // Sync progress bar with global audio
   useEffect(() => {
-    if (!audioRef.current) return;
-
     const audio = audioRef.current;
 
-    audio.pause();
-    audio.src = currentSong.audio;
-    audio.load();
-    audio.volume = volume;
+    if (!audio) return;
 
-    audio
-      .play()
-      .then(() => setIsPlaying(true))
-      .catch(() => setIsPlaying(false));
+    const updateTime = () => {
+      setCurrentTime(audio.currentTime);
+      setDuration(audio.duration || 0);
+    };
 
-    setCurrentTime(0);
-  }, [currentSong]);
+    audio.addEventListener("timeupdate", updateTime);
+
+    return () => {
+      audio.removeEventListener("timeupdate", updateTime);
+    };
+  }, [audioRef]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
+
     if (!audio) return;
 
     if (isPlaying) {
@@ -48,11 +58,13 @@ export default function Player({ songs, currentSong, setCurrentSong }) {
 
   const playNext = () => {
     const nextIndex = (currentIndex + 1) % songs.length;
+
     setCurrentSong(songs[nextIndex]);
   };
 
   const playPrev = () => {
     const prevIndex = currentIndex === 0 ? songs.length - 1 : currentIndex - 1;
+
     setCurrentSong(songs[prevIndex]);
   };
 
@@ -71,18 +83,12 @@ export default function Player({ songs, currentSong, setCurrentSong }) {
       </div>
 
       <div className="song-info">
-        <button className="back-btn" onClick={() => setCurrentSong(null)}>
+        <button className="back-btn" onClick={() => setShowPlayer(false)}>
           ← Back
         </button>
 
         <h2>{currentSong.title}</h2>
         <p>{currentSong.artist}</p>
-
-        <audio
-          ref={audioRef}
-          onTimeUpdate={() => setCurrentTime(audioRef.current.currentTime)}
-          onLoadedMetadata={() => setDuration(audioRef.current.duration)}
-        />
 
         <div className="controls">
           <button onClick={playPrev}>⏮</button>
@@ -119,7 +125,9 @@ export default function Player({ songs, currentSong, setCurrentSong }) {
             value={volume}
             onChange={(e) => {
               const v = e.target.value;
+
               setVolume(v);
+
               audioRef.current.volume = v;
             }}
           />
@@ -128,8 +136,8 @@ export default function Player({ songs, currentSong, setCurrentSong }) {
         <div className="lyrics">
           {currentSong.lyrics || "Lyrics not available 🎶"}
         </div>
-        <p className="note">Playback ends when you leave the player.</p>
       </div>
+
       <AnimatedBackground />
     </div>
   );
