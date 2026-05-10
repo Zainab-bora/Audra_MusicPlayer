@@ -14,6 +14,12 @@
   height: 100vh;
 }
 
+@media (max-width: 768px) {
+  .app-layout {
+    flex-direction: column;
+  }
+}
+
 .main-content {
   flex: 1;
   overflow-y: auto;
@@ -198,4 +204,21 @@
 .home-profile span {
   color: white;
   font-size: 14px;
+}
+
+@media (max-width: 768px) {
+
+  .home {
+    padding: 20px;
+  }
+
+  .music-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .music-card {
+    width: 100%;
+  }
+
 }

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import "../styles/sidebar.css";
 
 import MiniPlayer from "./MiniPlayer";
@@ -12,38 +14,53 @@ export default function Sidebar({
   currentTime,
   duration,
 }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const handleNavClick = (view) => {
     setActiveView(view);
+
+    // auto close mobile menu
+    setIsMenuOpen(false);
   };
 
   return (
-    <aside className="sidebar">
-      <h1 className="logo">Audra MusicPlayer</h1>
+    <>
+      {/* Mobile Hamburger Button */}
+      <button
+        className="mobile-menu-btn"
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        ☰
+      </button>
 
-      <nav className="sidebar-nav">
-        <button
-          className={`nav-item ${activeView === "explore" ? "active" : ""}`}
-          onClick={() => handleNavClick("explore")}
-        >
-          Explore
-        </button>
+      <aside className={`sidebar ${isMenuOpen ? "open" : ""}`}>
+        <h1 className="logo">Audra MusicPlayer</h1>
 
-        <button
-          className={`nav-item ${activeView === "search" ? "active" : ""}`}
-          onClick={() => handleNavClick("search")}
-        >
-          Search
-        </button>
-      </nav>
+        <nav className="sidebar-nav">
+          <button
+            className={`nav-item ${activeView === "explore" ? "active" : ""}`}
+            onClick={() => handleNavClick("explore")}
+          >
+            Explore
+          </button>
 
-      <MiniPlayer
-        currentSong={currentSong}
-        isPlaying={isPlaying}
-        togglePlay={togglePlay}
-        setShowPlayer={setShowPlayer}
-        currentTime={currentTime}
-        duration={duration}
-      />
-    </aside>
+          <button
+            className={`nav-item ${activeView === "search" ? "active" : ""}`}
+            onClick={() => handleNavClick("search")}
+          >
+            Search
+          </button>
+        </nav>
+
+        <MiniPlayer
+          currentSong={currentSong}
+          isPlaying={isPlaying}
+          togglePlay={togglePlay}
+          setShowPlayer={setShowPlayer}
+          currentTime={currentTime}
+          duration={duration}
+        />
+      </aside>
+    </>
   );
 }

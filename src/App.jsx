@@ -31,6 +31,7 @@ export default function App() {
   const [duration, setDuration] = useState(0);
 
   const [user, setUser] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Fetch songs from Firestore
   useEffect(() => {
@@ -127,11 +128,11 @@ export default function App() {
           setActiveView={setActiveView}
           setCurrentSong={setCurrentSong}
           currentSong={currentSong}
+          audioRef={audioRef}
           isPlaying={isPlaying}
-          togglePlay={togglePlay}
-          setShowPlayer={setShowPlayer}
-          currentTime={currentTime}
-          duration={duration}
+          setIsPlaying={setIsPlaying}
+          isMenuOpen={isMenuOpen}
+          setIsMenuOpen={setIsMenuOpen}
         />
 
         <main className="main-content">

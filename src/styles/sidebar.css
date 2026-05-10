@@ -47,3 +47,54 @@
   color: var(--accent);
   font-weight: 500;
 }
+
+.mobile-menu-btn {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-btn {
+    display: block;
+
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    z-index: 2000;
+
+    background: #00e5ff;
+    color: black;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 10px 15px;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    cursor: pointer;
+  }
+
+  .sidebar {
+    position: fixed;
+
+    top: 0;
+    left: -100%;
+
+    width: 260px;
+    height: 100vh;
+
+    z-index: 1500;
+
+    transition: 0.3s ease;
+
+    background: rgba(0, 0, 0, 0.95);
+
+    padding: 30px 20px;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+}
