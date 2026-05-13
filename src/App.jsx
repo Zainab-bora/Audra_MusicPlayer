@@ -13,6 +13,8 @@ import { auth } from "./firebase";
 
 import { signInWithGoogle, logoutUser } from "./services/authService";
 
+import { fetchTrendingSongs } from "./services/deezerService";
+
 export default function App() {
   const [songs, setSongs] = useState([]);
   const [currentSong, setCurrentSong] = useState(null);
@@ -32,6 +34,8 @@ export default function App() {
 
   const [user, setUser] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const [apiSongs, setApiSongs] = useState([]);
 
   // Fetch songs from Firestore
   useEffect(() => {
@@ -55,6 +59,16 @@ export default function App() {
 
     fetchSongs();
   }, [user]);
+
+  useEffect(() => {
+    const loadApiSongs = async () => {
+      const songs = await fetchTrendingSongs();
+
+      setApiSongs(songs);
+    };
+
+    loadApiSongs();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -84,13 +98,15 @@ export default function App() {
     };
     // Auto-play next song
     audio.onended = () => {
-      const currentIndex = songs.findIndex(
-        (song) => song.firestoreId === currentSong.firestoreId,
+      const allSongs = [...songs, ...apiSongs];
+
+      const currentIndex = allSongs.findIndex(
+        (song) => song.id === currentSong.id,
       );
 
-      const nextIndex = (currentIndex + 1) % songs.length;
+      const nextIndex = (currentIndex + 1) % allSongs.length;
 
-      setCurrentSong(songs[nextIndex]);
+      setCurrentSong(allSongs[nextIndex]);
     };
   }, [currentSong, songs]);
 
@@ -133,12 +149,16 @@ export default function App() {
           setIsPlaying={setIsPlaying}
           isMenuOpen={isMenuOpen}
           setIsMenuOpen={setIsMenuOpen}
+          setShowPlayer={setShowPlayer}
+          togglePlay={togglePlay}
+          currentTime={currentTime}
+          duration={duration}
         />
 
         <main className="main-content">
           {showPlayer && currentSong ? (
             <Player
-              songs={songs}
+              songs={[...songs, ...apiSongs]}
               currentSong={currentSong}
               setCurrentSong={setCurrentSong}
               setShowPlayer={setShowPlayer}
@@ -150,7 +170,7 @@ export default function App() {
             />
           ) : activeView === "search" ? (
             <Search
-              songs={songs}
+              songs={[...songs, ...apiSongs]}
               onSongSelect={(song) => {
                 setCurrentSong(song);
                 setShowPlayer(true);
@@ -158,7 +178,7 @@ export default function App() {
             />
           ) : activeView === "explore" ? (
             <Home
-              songs={songs}
+              songs={[...songs, ...apiSongs]}
               onSongSelect={(song) => {
                 setCurrentSong(song);
                 setShowPlayer(true);
@@ -175,7 +195,7 @@ export default function App() {
             />
           ) : (
             <Search
-              songs={songs}
+              songs={[...songs, ...apiSongs]}
               onSongSelect={(song) => {
                 setCurrentSong(song);
                 setShowPlayer(true);

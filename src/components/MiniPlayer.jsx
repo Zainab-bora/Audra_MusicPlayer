@@ -27,9 +27,9 @@ export default function MiniPlayer({
 
       <div className="mini-controls">
         <button
+          className="mini-play-btn"
           onClick={(e) => {
             e.stopPropagation();
-
             togglePlay();
           }}
         >

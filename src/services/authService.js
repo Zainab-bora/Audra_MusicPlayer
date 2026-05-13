@@ -17,6 +17,7 @@ export const signInWithGoogle = async () => {
 export const logoutUser = async () => {
   try {
     await signOut(auth);
+    window.location.reload();
     console.log("User logged out");
   } catch (error) {
     console.error("Logout Error:", error);
