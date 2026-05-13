@@ -4,6 +4,7 @@ import AddSongCard from "../components/AddSongCard";
 import AddSongModal from "../components/AddSongModal";
 import "../styles/home.css";
 import AnimatedBackground from "../components/AnimatedBackground";
+import LoadingCard from "../components/LoadingCard";
 
 export default function Home({
   songs,
@@ -13,6 +14,7 @@ export default function Home({
   user,
   signInWithGoogle,
   logoutUser,
+  loading,
 }) {
   const [showModal, setShowModal] = useState(false);
 
@@ -51,15 +53,19 @@ export default function Home({
 
       <div className="music-grid">
         <AddSongCard onAdd={() => setShowModal(true)} />
-
-        {songs.map((song) => (
-          <MusicCard
-            key={song.id}
-            song={song}
-            onSelect={() => onSongSelect(song)}
-            onDelete={onDeleteSong}
-          />
-        ))}
+        {loading &&
+          Array.from({ length: 8 }).map((_, index) => (
+            <LoadingCard key={index} />
+          ))}
+        {!loading &&
+          songs.map((song) => (
+            <MusicCard
+              key={song.id}
+              song={song}
+              onSelect={() => onSongSelect(song)}
+              onDelete={onDeleteSong}
+            />
+          ))}
       </div>
 
       {showModal && (

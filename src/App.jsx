@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import Home from "./pages/Home";
 import Player from "./components/Player";
 import Search from "./components/Search";
+import LoadingScreen from "./components/LoadingScreen";
 
 import { getSongsFromFirestore } from "./services/songService";
 import { deleteSongFromFirestore } from "./services/songService";
@@ -37,6 +38,8 @@ export default function App() {
 
   const [apiSongs, setApiSongs] = useState([]);
 
+  const [apiLoading, setApiLoading] = useState(true);
+
   // Fetch songs from Firestore
   useEffect(() => {
     if (!user) {
@@ -62,9 +65,15 @@ export default function App() {
 
   useEffect(() => {
     const loadApiSongs = async () => {
-      const songs = await fetchTrendingSongs();
+      try {
+        const songs = await fetchTrendingSongs();
 
-      setApiSongs(songs);
+        setApiSongs(songs);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setApiLoading(false);
+      }
     };
 
     loadApiSongs();
@@ -130,7 +139,7 @@ export default function App() {
   };
 
   if (loading) {
-    return <h2 style={{ color: "white" }}>Loading songs...</h2>;
+    return <LoadingScreen />;
   }
 
   return (
@@ -189,6 +198,7 @@ export default function App() {
 
                 setSongs((prev) => prev.filter((s) => s.firestoreId !== id));
               }}
+              loading={apiLoading}
               user={user}
               signInWithGoogle={signInWithGoogle}
               logoutUser={logoutUser}

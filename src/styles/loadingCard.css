@@ -1,0 +1,50 @@
+.loading-card {
+  width: 100%;
+
+  padding: 16px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.loading-image {
+  width: 100%;
+  aspect-ratio: 1;
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  margin-bottom: 15px;
+}
+
+.loading-line {
+  height: 12px;
+
+  border-radius: 8px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  margin-bottom: 10px;
+}
+
+.loading-line.short {
+  width: 60%;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.5;
+  }
+}
