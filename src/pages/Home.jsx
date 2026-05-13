@@ -54,22 +54,40 @@ export default function Home({
         </div>
       </div>
 
-      <div className="music-grid">
-        <AddSongCard onAdd={() => setShowModal(true)} />
+      <div
+        className={
+          songs.length === 0 && title === "Favorites"
+            ? "music-grid empty-grid"
+            : "music-grid"
+        }
+      >
+        {title !== "Favorites" && (
+          <AddSongCard onAdd={() => setShowModal(true)} />
+        )}
         {loading &&
           Array.from({ length: 8 }).map((_, index) => (
             <LoadingCard key={index} />
           ))}
         {!loading &&
-          songs.map((song) => (
-            <MusicCard
-              key={song.id}
-              song={song}
-              onSelect={() => onSongSelect(song)}
-              onDelete={onDeleteSong}
-              favorites={favorites}
-              toggleFavorite={toggleFavorite}
-            />
+          (songs.length === 0 ? (
+            <div className="empty-favorites">
+              <h3>No favorite songs yet 💔</h3>
+
+              <p>
+                Start adding songs to your favorites and they’ll appear here.
+              </p>
+            </div>
+          ) : (
+            songs.map((song) => (
+              <MusicCard
+                key={song.id}
+                song={song}
+                onSelect={() => onSongSelect(song)}
+                onDelete={onDeleteSong}
+                favorites={favorites}
+                toggleFavorite={toggleFavorite}
+              />
+            ))
           ))}
       </div>
 
@@ -81,9 +99,11 @@ export default function Home({
         />
       )}
 
-      <p className="refresh-note">
-        Your songs are safely saved and always ready to play ✨{" "}
-      </p>
+      {title !== "Favorites" && (
+        <p className="refresh-note">
+          Your songs are safely saved and always ready to play ✨{" "}
+        </p>
+      )}
       <AnimatedBackground />
     </div>
   );
