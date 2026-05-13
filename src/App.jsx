@@ -40,6 +40,21 @@ export default function App() {
 
   const [apiLoading, setApiLoading] = useState(true);
 
+  const [favorites, setFavorites] = useState(() => {
+    const saved = localStorage.getItem("favorites");
+
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const toggleFavorite = (song) => {
+    const exists = favorites.find((fav) => fav.id === song.id);
+
+    if (exists) {
+      setFavorites((prev) => prev.filter((fav) => fav.id !== song.id));
+    } else {
+      setFavorites((prev) => [...prev, song]);
+    }
+  };
   // Fetch songs from Firestore
   useEffect(() => {
     if (!user) {
@@ -138,6 +153,10 @@ export default function App() {
     }
   };
 
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -162,6 +181,7 @@ export default function App() {
           togglePlay={togglePlay}
           currentTime={currentTime}
           duration={duration}
+          setShowPlayer={setShowPlayer}
         />
 
         <main className="main-content">
@@ -187,6 +207,7 @@ export default function App() {
             />
           ) : activeView === "explore" ? (
             <Home
+              title="Discover"
               songs={[...songs, ...apiSongs]}
               onSongSelect={(song) => {
                 setCurrentSong(song);
@@ -199,6 +220,29 @@ export default function App() {
                 setSongs((prev) => prev.filter((s) => s.firestoreId !== id));
               }}
               loading={apiLoading}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
+              user={user}
+              signInWithGoogle={signInWithGoogle}
+              logoutUser={logoutUser}
+            />
+          ) : activeView === "favorites" ? (
+            <Home
+              title="Favorites"
+              songs={favorites}
+              onSongSelect={(song) => {
+                setCurrentSong(song);
+                setShowPlayer(true);
+              }}
+              onAddSong={(song) => setSongs((prev) => [song, ...prev])}
+              onDeleteSong={async (id) => {
+                await deleteSongFromFirestore(id);
+
+                setSongs((prev) => prev.filter((s) => s.firestoreId !== id));
+              }}
+              loading={false}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
               user={user}
               signInWithGoogle={signInWithGoogle}
               logoutUser={logoutUser}
@@ -210,6 +254,8 @@ export default function App() {
                 setCurrentSong(song);
                 setShowPlayer(true);
               }}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
             />
           )}
         </main>

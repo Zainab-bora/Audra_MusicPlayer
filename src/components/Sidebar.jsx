@@ -19,6 +19,8 @@ export default function Sidebar({
   const handleNavClick = (view) => {
     setActiveView(view);
 
+    setShowPlayer(false);
+
     // auto close mobile menu
     setIsMenuOpen(false);
   };
@@ -49,6 +51,12 @@ export default function Sidebar({
             onClick={() => handleNavClick("search")}
           >
             Search
+          </button>
+          <button
+            className={`nav-item ${activeView === "favorites" ? "active" : ""}`}
+            onClick={() => handleNavClick("favorites")}
+          >
+            Favorites
           </button>
         </nav>
 

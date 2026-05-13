@@ -2,7 +2,12 @@ import { useState } from "react";
 import MusicCard from "../components/MusicCard";
 import AnimatedBackground from "../components/AnimatedBackground";
 
-export default function Search({ songs, onSongSelect }) {
+export default function Search({
+  songs,
+  onSongSelect,
+  favorites,
+  toggleFavorite,
+}) {
   const [query, setQuery] = useState("");
 
   const filteredSongs = songs.filter(
@@ -38,6 +43,8 @@ export default function Search({ songs, onSongSelect }) {
               key={song.id}
               song={song}
               onSelect={() => onSongSelect(song)}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
             />
           ))
         ) : (

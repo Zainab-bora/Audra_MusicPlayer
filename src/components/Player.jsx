@@ -21,7 +21,7 @@ export default function Player({
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
-
+  const [previousVolume, setPreviousVolume] = useState(volume);
   const currentIndex = songs.findIndex((s) => s.id === currentSong.id);
 
   // Sync progress bar with global audio
@@ -84,6 +84,20 @@ export default function Player({
     };
   }, []);
 
+  const toggleMute = () => {
+    if (volume > 0) {
+      setPreviousVolume(volume);
+
+      setVolume(0);
+
+      audioRef.current.volume = 0;
+    } else {
+      setVolume(previousVolume || 0.7);
+
+      audioRef.current.volume = previousVolume || 0.7;
+    }
+  };
+
   return (
     <div className="player">
       {/* CD */}
@@ -129,9 +143,9 @@ export default function Player({
         />
 
         <div className="volume-control">
-          <span className="volume-icon">
+          <button className="volume-icon" onClick={toggleMute}>
             {volume === 0 ? "🔇" : volume < 0.5 ? "🔉" : "🔊"}
-          </span>
+          </button>
 
           <input
             type="range"

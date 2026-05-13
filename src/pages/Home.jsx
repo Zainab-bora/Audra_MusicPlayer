@@ -7,6 +7,7 @@ import AnimatedBackground from "../components/AnimatedBackground";
 import LoadingCard from "../components/LoadingCard";
 
 export default function Home({
+  title = "Discover",
   songs,
   onSongSelect,
   onAddSong,
@@ -15,6 +16,8 @@ export default function Home({
   signInWithGoogle,
   logoutUser,
   loading,
+  favorites,
+  toggleFavorite,
 }) {
   const [showModal, setShowModal] = useState(false);
 
@@ -26,7 +29,7 @@ export default function Home({
   return (
     <div className="home">
       <div className="home-header">
-        <h2 className="home-title">Discover</h2>
+        <h2 className="home-title">{title}</h2>
 
         <div className="home-auth">
           {user ? (
@@ -64,6 +67,8 @@ export default function Home({
               song={song}
               onSelect={() => onSongSelect(song)}
               onDelete={onDeleteSong}
+              favorites={favorites}
+              toggleFavorite={toggleFavorite}
             />
           ))}
       </div>

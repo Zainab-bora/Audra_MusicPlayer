@@ -117,8 +117,8 @@
 
 .delete-btn {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 14px;
+  right: 36px;
 
   width: 32px;
   height: 32px;
@@ -205,6 +205,29 @@
 .home-profile span {
   color: white;
   font-size: 14px;
+}
+.favorite-btn {
+  position: absolute;
+
+  bottom: 16px;
+  right: 18px;
+
+  background: transparent;
+  border: none;
+
+  font-size: 26px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  color: white;
+}
+
+.favorite-btn.active {
+  color: #00e5ff;
+
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.7);
 }
 
 @media (max-width: 768px) {

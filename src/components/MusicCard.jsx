@@ -1,7 +1,14 @@
 import "../styles/home.css";
 import defaultCover from "../assets/default-cover.jpeg";
 
-export default function MusicCard({ song, onSelect, onDelete }) {
+export default function MusicCard({
+  song,
+  onSelect,
+  onDelete,
+  favorites,
+  toggleFavorite,
+}) {
+  const isFavorite = favorites?.some((fav) => fav.id === song.id);
   return (
     <div className="music-card" onClick={onSelect}>
       <img
@@ -12,6 +19,16 @@ export default function MusicCard({ song, onSelect, onDelete }) {
 
       <h4 className="song-title">{song.title}</h4>
       <p className="artist">{song.artist}</p>
+      <button
+        className={`favorite-btn ${isFavorite ? "active" : ""}`}
+        onClick={(e) => {
+          e.stopPropagation();
+
+          toggleFavorite(song);
+        }}
+      >
+        ♥
+      </button>
       <button
         className="delete-btn"
         onClick={(e) => {
