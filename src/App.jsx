@@ -83,7 +83,12 @@ export default function App() {
       try {
         const songs = await fetchTrendingSongs();
 
-        setApiSongs(songs);
+        const uniqueSongs = songs.filter(
+          (song, index, self) =>
+            index === self.findIndex((s) => s.id === song.id),
+        );
+
+        setApiSongs(uniqueSongs);
       } catch (error) {
         console.error(error);
       } finally {
@@ -108,6 +113,30 @@ export default function App() {
 
     const audio = audioRef.current;
 
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: currentSong.title,
+        artist: currentSong.artist,
+        artwork: [
+          {
+            src: currentSong.cover,
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      });
+
+      navigator.mediaSession.setActionHandler("play", () => {
+        audio.play();
+        setIsPlaying(true);
+      });
+
+      navigator.mediaSession.setActionHandler("pause", () => {
+        audio.pause();
+        setIsPlaying(false);
+      });
+    }
+
     audio.src = currentSong.audio;
     audio.volume = volume;
 
@@ -120,7 +149,7 @@ export default function App() {
       setCurrentTime(audio.currentTime);
       setDuration(audio.duration || 0);
     };
-    // Auto-play next song
+
     audio.onended = () => {
       const allSongs = [...songs, ...apiSongs];
 
@@ -208,7 +237,13 @@ export default function App() {
           ) : activeView === "explore" ? (
             <Home
               title="Discover"
-              songs={[...songs, ...apiSongs]}
+              songs={[
+                ...songs,
+                ...apiSongs.filter(
+                  (apiSong) =>
+                    !songs.some((userSong) => userSong.id === apiSong.id),
+                ),
+              ]}
               onSongSelect={(song) => {
                 setCurrentSong(song);
                 setShowPlayer(true);

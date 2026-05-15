@@ -17,30 +17,22 @@ export default function Search({
   );
 
   return (
-    <div style={{ padding: "24px" }}>
-      <h2 style={{ color: "white", marginBottom: "16px" }}>Search</h2>
+    <div className="search-page">
+      <h2 className="search-title">Search</h2>
 
       <input
         type="text"
         placeholder="Search by song or artist..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "12px",
-          borderRadius: "10px",
-          background: "#0f1f24",
-          color: "white",
-          border: "1px solid rgba(0,210,216,0.4)",
-          marginBottom: "24px",
-        }}
+        className="search-input"
       />
 
       <div className="music-grid">
         {filteredSongs.length ? (
-          filteredSongs.map((song) => (
+          filteredSongs.map((song, index) => (
             <MusicCard
-              key={song.id}
+              key={`${song.id}-${index}`}
               song={song}
               onSelect={() => onSongSelect(song)}
               favorites={favorites}
@@ -48,9 +40,10 @@ export default function Search({
             />
           ))
         ) : (
-          <p style={{ color: "#888" }}>No matching songs found</p>
+          <p className="no-results">No matching songs found</p>
         )}
       </div>
+
       <AnimatedBackground />
     </div>
   );

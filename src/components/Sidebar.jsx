@@ -27,6 +27,9 @@ export default function Sidebar({
 
   return (
     <>
+      {isMenuOpen && (
+        <div className="sidebar-overlay" onClick={() => setIsMenuOpen(false)} />
+      )}
       {/* Mobile Hamburger Button */}
       <button
         className="mobile-menu-btn"

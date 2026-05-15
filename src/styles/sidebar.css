@@ -52,6 +52,16 @@
   display: none;
 }
 
+.sidebar-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  z-index: 90;
+}
+
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: flex;
@@ -66,7 +76,7 @@
     width: 45px;
     height: 45px;
 
-    z-index: 2000;
+    z-index: 1000;
 
     background: #00e5ff;
     color: black;

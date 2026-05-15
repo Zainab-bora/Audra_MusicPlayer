@@ -80,7 +80,7 @@ export default function Home({
           ) : (
             songs.map((song) => (
               <MusicCard
-                key={song.id}
+                key={`${song.id}-${title}`}
                 song={song}
                 onSelect={() => onSongSelect(song)}
                 onDelete={onDeleteSong}

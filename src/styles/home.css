@@ -269,30 +269,51 @@
   opacity: 0.8;
 }
 
+.search-page {
+  padding: 24px;
+}
+
+.search-title {
+  color: white;
+
+  margin-bottom: 16px;
+
+  font-size: 28px;
+}
+
+.search-input {
+  width: 100%;
+
+  padding: 12px;
+
+  border-radius: 10px;
+
+  background: #0f1f24;
+
+  color: white;
+
+  border: 1px solid rgba(0, 210, 216, 0.4);
+
+  margin-bottom: 24px;
+}
+
+.no-results {
+  color: #888;
+}
+
 @media (max-width: 768px) {
   .home {
     padding: 20px;
-  }
-
-  .home {
     padding-top: 100px;
   }
 
   .music-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 16px;
   }
 
-  .music-grid {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
   .music-card {
     width: 100%;
-  }
-
-  .music-card {
     padding: 12px;
   }
 
@@ -307,5 +328,13 @@
 
   .artist {
     font-size: 13px;
+  }
+
+  .search-page {
+    padding: 100px 20px 20px;
+  }
+
+  .search-title {
+    font-size: 26px;
   }
 }
